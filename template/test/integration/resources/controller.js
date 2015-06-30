@@ -9,21 +9,11 @@ res.json = (response) => {
   return response
 }
 
-describe('{{resourceName}}Controller', function() {
+describe('Integration: {{resourceName}}Controller', function() {
 
   beforeEach( (done) => {
 
     res.statusCode = null
-
-    done()
-
-  })
-
-  it('should initialize', function(done) {
-
-    var {{instanceName}}Controller = new {{resourceName}}Controller()
-
-    expect({{instanceName}}Controller).to.be.an('object')
 
     done()
 

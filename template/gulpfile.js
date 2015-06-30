@@ -17,6 +17,7 @@ gulp.task('mocha-server-run', function() {
   return gulp
     .src([
       './test/helpers/runner.js',
+      './test/unit/**/*.js',
       './test/integration/**/*.js'
     ], {read: false})
     .pipe(mocha({reporter: 'spec'}))

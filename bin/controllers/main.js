@@ -50,6 +50,7 @@ class InitController extends Brazier.Controller {
     mkdirp.sync(path.join(process.cwd(), './routes'))
     mkdirp.sync(path.join(process.cwd(), './resources/base'))
     mkdirp.sync(path.join(process.cwd(), './test/helpers'))
+    mkdirp.sync(path.join(process.cwd(), './test/unit/resources/base'))
     mkdirp.sync(path.join(process.cwd(), './test/integration/resources/base'))
 
     util.copyFiles({
@@ -89,6 +90,14 @@ class InitController extends Brazier.Controller {
         {
           src:  './template/test/helpers/runner.js',
           dest: './test/helpers/runner.js'
+        },
+        {
+          src:  './template/test/unit/resources/base/controller.js',
+          dest: './test/unit/resources/base/controller.js'
+        },
+        {
+          src:  './template/test/unit/resources/base/model.js',
+          dest: './test/unit/resources/base/model.js'
         },
         {
           src:  './template/test/integration/resources/base/controller.js',

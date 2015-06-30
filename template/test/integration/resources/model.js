@@ -1,16 +1,6 @@
 var {{resourceName}}Model = require('../../../../resources/{{lowerCase resourceName}}/model')
 
-describe('{{resourceName}}Model', function() {
-
-  it('should initialize', function(done) {
-
-    var {{instanceName}} = new {{resourceName}}Model()
-
-    expect({{instanceName}}).to.be.an('object')
-
-    done()
-
-  })
+describe('Integration: {{resourceName}}Model', function() {
 
   it('should create a {{instanceName}}', function(done) {
 

@@ -4,7 +4,7 @@ var acorn             = require('acorn'),
     Handlebars        = require('handlebars'),
     mkdirp            = require('mkdirp'),
     path              = require('path'),
-    r                 = require('rethinkdb')
+    util              = Brazier.util
 
 /*
 @class GenerateController
@@ -38,6 +38,7 @@ class GenerateController extends Brazier.Controller {
   generate(key, options = {}, cb) {
 
     // Make sure that test directories exist
+    mkdirp.sync(path.join(`${this.testPath}/unit/resources/${key}`))
     mkdirp.sync(path.join(`${this.testPath}/integration/resources/${key}`))
 
     this.generateController(key)
@@ -80,49 +81,71 @@ class GenerateController extends Brazier.Controller {
 
     mkdirp.sync(this.resourcePath)
 
-    let instanceName = this.singularCase(key),
-        resourceName = this.upperCaseFirstLetter(key)
+    let instanceName = util.singularCase(key),
+        resourceName = util.upperCaseFirstLetter(key)
 
-    var controllerSrc          = fs.readFileSync(`${this.templatePath}/resource/controller.js`, 'utf8'),
-        controllerTemplate     = Handlebars.compile(controllerSrc)
-
-    var controllerTestSrc      = fs.readFileSync(`${this.templatePath}/test/integration/resources/controller.js`, 'utf8'),
-        controllerTestTemplate = Handlebars.compile(controllerTestSrc)
-
-    fs.writeFileSync(`${this.resourcePath}/${key}/controller.js`, controllerTemplate({
-      instanceName,
-      resourceName
-    }), 'utf8')
-
-    fs.writeFileSync(`${this.testPath}/integration/resources/${key}/controller.js`, controllerTestTemplate({
-      instanceName,
-      resourceName
-    }), 'utf8')
+    util.copyFiles([
+      {
+        data: {
+          instanceName,
+          resourceName
+        },
+        dest: `${this.resourcePath}/${key}/controller.js`,
+        src: `${this.templatePath}/resource/controller.js`
+      },
+      {
+        data: {
+          instanceName,
+          resourceName
+        },
+        dest: `${this.testPath}/unit/resources/${key}/controller.js`,
+        src: `${this.templatePath}/test/unit/resources/controller.js`
+      },
+      {
+        data: {
+          instanceName,
+          resourceName
+        },
+        dest: `${this.testPath}/integration/resources/${key}/controller.js`,
+        src: `${this.templatePath}/test/integration/resources/controller.js`
+      }
+    ])
 
   }
 
   generateModel(key) {
 
-    var modelSrc          = fs.readFileSync(`${this.templatePath}/resource/model.js`, 'utf8'),
-        modelTemplate     = Handlebars.compile(modelSrc)
-
-    var modelTestSrc      = fs.readFileSync(`${this.templatePath}/test/integration/resources/model.js`, 'utf8'),
-        modelTestTemplate = Handlebars.compile(modelTestSrc)
-
     mkdirp.sync(this.resourcePath)
 
-    let instanceName = this.singularCase(key),
-        resourceName = this.upperCaseFirstLetter(key)
+    let instanceName = util.singularCase(key),
+        resourceName = util.upperCaseFirstLetter(key)
 
-    fs.writeFileSync(`${this.resourcePath}/${key}/model.js`, modelTemplate({
-      instanceName,
-      resourceName
-    }), 'utf8')
-
-    fs.writeFileSync(`${this.testPath}/integration/resources/${key}/model.js`, modelTestTemplate({
-      instanceName,
-      resourceName
-    }), 'utf8')
+    util.copyFiles([
+      {
+        data: {
+          instanceName,
+          resourceName
+        },
+        dest: `${this.resourcePath}/${key}/model.js`,
+        src: `${this.templatePath}/resource/model.js`
+      },
+      {
+        data: {
+          instanceName,
+          resourceName
+        },
+        dest: `${this.testPath}/unit/resources/${key}/model.js`,
+        src: `${this.templatePath}/test/unit/resources/model.js`
+      },
+      {
+        data: {
+          instanceName,
+          resourceName
+        },
+        dest: `${this.testPath}/integration/resources/${key}/model.js`,
+        src: `${this.templatePath}/test/integration/resources/model.js`
+      }
+    ])
 
   }
 
@@ -143,12 +166,6 @@ class GenerateController extends Brazier.Controller {
     var schema = (Object.assign(this.store.schema, defaultSchema))
 
     fs.writeFileSync(path.join(this.cwd, `./resources/${key}/schema.json`), JSON.stringify(schema, null, 2), 'utf8')
-
-  }
-
-  lowerCaseFirstLetter(s) {
-
-    return s.charAt(0).toLowerCase() + s.slice(1)
 
   }
 
@@ -246,36 +263,6 @@ class GenerateController extends Brazier.Controller {
 
   }
 
-  singularCase(s) {
-
-    return s.substring(0, s.length - 1)
-
-  }
-
-  upperCaseFirstLetter(s) {
-
-    return s.charAt(0).toUpperCase() + s.slice(1)
-
-  }
-
 }
-
-Handlebars.registerHelper('lowerCase', (s) => {
-
-  return GenerateController.prototype.lowerCaseFirstLetter(s)
-
-})
-
-Handlebars.registerHelper('singularCase', (s) => {
-
-  return GenerateController.prototype.singularCase(s)
-
-})
-
-Handlebars.registerHelper('upperCase', (s) => {
-
-  return GenerateController.prototype.upperCaseFirstLetter(s)
-
-})
 
 module.exports = GenerateController

@@ -6,17 +6,7 @@ var res = {
   }
 }
 
-describe('ResourceController', function() {
-
-  it('should initialize', function(done) {
-
-    var resourceController = new ResourceController()
-
-    expect(resourceController).to.be.an('object')
-
-    done()
-
-  })
+describe('Integration: ResourceController', function() {
 
   it('should return a 200 response by default', function(done) {
 
