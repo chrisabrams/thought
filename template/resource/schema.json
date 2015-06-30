@@ -1,0 +1,22 @@
+{
+  "dateCreated": {
+    "default": "now",
+    "type": "date"
+  },
+  "dateUpdated": {
+    "default": "now",
+    "type": "date"
+  },
+  "id": {
+    "required": true,
+    "type": "string"
+  },
+  "recordStatus": {
+    "default": "active",
+    "type": "enum",
+    "valid": ["active", "deleted"]
+  },
+  "schemaVersion": {
+    "type": "string"
+  }
+}
