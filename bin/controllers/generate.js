@@ -15,6 +15,7 @@ class GenerateController extends Brazier.Controller {
   constructor() {
     super()
 
+    this.appPath           = path.join(this.cwd)
     this.resourcePath      = path.join(this.cwd, `./resources`)
     this.testPath          = path.join(this.cwd, `./test`)
     this.templatePath      = path.join(__dirname, '../../template')
@@ -45,6 +46,7 @@ class GenerateController extends Brazier.Controller {
     this.generateModel(key)
     this.generateSchema(key)
     this.generateRoutes(key)
+    this.generateSdkItem(key)
 
     //this.createTable(key, {primaryKey: 'id'}, cb)
 
@@ -166,6 +168,32 @@ class GenerateController extends Brazier.Controller {
     var schema = (Object.assign(this.store.schema, defaultSchema))
 
     fs.writeFileSync(path.join(this.cwd, `./resources/${key}/schema.json`), JSON.stringify(schema, null, 2), 'utf8')
+
+  }
+
+  generateSdkItem(key) {
+
+    let instanceName = util.singularCase(key),
+        resourceName = util.upperCaseFirstLetter(key)
+
+    util.copyFiles([
+      {
+        data: {
+          instanceName,
+          resourceName
+        },
+        dest: `${this.appPath}/sdk/resources/${key}.js`,
+        src: `${this.templatePath}/sdk/resources/resource.js`
+      },
+      {
+        data: {
+          instanceName,
+          resourceName
+        },
+        dest: `${this.appPath}/test/sdk/resources/${key}.js`,
+        src: `${this.templatePath}/test/sdk/resources/resource.js`
+      }
+    ])
 
   }
 

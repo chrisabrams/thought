@@ -9,7 +9,7 @@ res.json = (response) => {
   return response
 }
 
-describe('Integration: {{resourceName}}Controller', function() {
+describe('Integration: {{resourceName}} Controller', function() {
 
   beforeEach( (done) => {
 

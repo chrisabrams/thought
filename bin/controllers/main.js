@@ -47,20 +47,29 @@ class InitController extends Brazier.Controller {
     var gulpfile = fs.readFileSync(path.join(__dirname, '../../', './template/gulpfile.js'), 'utf8')
     fs.writeFileSync(path.join(process.cwd(), './gulpfile.js'), gulpfile, 'utf8')
 
+    mkdirp.sync(path.join(process.cwd(), './build/sdk'))
     mkdirp.sync(path.join(process.cwd(), './routes'))
     mkdirp.sync(path.join(process.cwd(), './resources/base'))
+    mkdirp.sync(path.join(process.cwd(), './sdk/config'))
+    mkdirp.sync(path.join(process.cwd(), './sdk/resources'))
+    mkdirp.sync(path.join(process.cwd(), './service'))
     mkdirp.sync(path.join(process.cwd(), './test/helpers'))
-    mkdirp.sync(path.join(process.cwd(), './test/unit/resources/base'))
     mkdirp.sync(path.join(process.cwd(), './test/integration/resources/base'))
+    mkdirp.sync(path.join(process.cwd(), './test/sdk/resources'))
+    mkdirp.sync(path.join(process.cwd(), './test/unit/resources/base'))
 
     util.copyFiles({
       destCwd: process.cwd(),
       srcCwd: path.join(__dirname, '../..'),
       files: [
         {
-          data: this.store,
           src:  './template/index.js',
           dest: './index.js'
+        },
+        {
+          data: this.store,
+          src:  './template/service/index.js',
+          dest: './service/index.js'
         },
         {
           data: this.store,
@@ -86,6 +95,14 @@ class InitController extends Brazier.Controller {
         {
           src:  './template/resources/ping/routes.js',
           dest: './resources/ping/routes.js'
+        },
+        {
+          src:  './template/sdk/config/api.js',
+          dest: './sdk/config/api.js'
+        },
+        {
+          src:  './template/sdk/config/url.js',
+          dest: './sdk/config/url.js'
         },
         {
           src:  './template/test/helpers/runner.js',

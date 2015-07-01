@@ -1,6 +1,6 @@
 var {{resourceName}}Model = require('../../../../resources/{{lowerCase resourceName}}/model')
 
-describe('Integration: {{resourceName}}Model', function() {
+describe('Integration: {{resourceName}} Model', function() {
 
   it('should create a {{instanceName}}', function(done) {
 

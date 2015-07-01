@@ -1,6 +1,6 @@
 var ResourceController = require('../../../../resources/base/controller')
 
-describe('Unit: ResourceController', function() {
+describe('Unit: Resource Controller', function() {
 
   it('should initialize', function(done) {
 

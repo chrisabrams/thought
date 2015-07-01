@@ -6,7 +6,7 @@ var res = {
   }
 }
 
-describe('Integration: ResourceController', function() {
+describe('Integration: Resource Controller', function() {
 
   it('should return a 200 response by default', function(done) {
 

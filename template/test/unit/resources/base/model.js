@@ -1,6 +1,6 @@
 var ResourceModel = require('../../../../resources/base/model')
 
-describe('Unit: ResourceModel', function() {
+describe('Unit: Resource Model', function() {
 
   it('should initialize without schema', function(done) {
 

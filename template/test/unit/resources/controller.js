@@ -1,7 +1,7 @@
 var {{resourceName}}Controller = require('../../../../resources/{{lowerCase resourceName}}/controller'),
     {{resourceName}}Model      = require('../../../../resources/{{lowerCase resourceName}}/model')
 
-describe('Unit: {{resourceName}}Controller', function() {
+describe('Unit: {{resourceName}} Controller', function() {
 
   it('should initialize', function(done) {
 
